@@ -4,3 +4,4 @@ import './style.css'
 const progress = new Progress({
 
 })
+

@@ -11,10 +11,10 @@
     "cleanMinifiedFile": "rm lib/progress.min.js",
     "cleanBundleFile": "rm lib/progress.bundle.js",
     "test": "eslint src",
-    "serve": "browser-sync start -s demo -f demo -f !demo/demo.js --serveStatic lib",
+    "serve": "browser-sync start -s demo -f demo -f !demo/demo.js --serveStatic lib --reload-debounce 1000",
     "bundle": "npm run bundle:lib && npm run bundle:demo",
     "watch:lib": "chokidar src/*.* -c \"npm run bundle:lib\"",
-    "watch:demo": "chokidar demo/*.* lib/progress.bundle.js !demo/demo.bundle.js -c \"npm run bundle:demo\" -d 500",
+    "watch:demo": "chokidar demo/*.* lib/progress.bundle.js !demo/demo.bundle.js -c \"npm run bundle:demo\" -d 1000",
     "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:lib\" \"npm run watch:demo\""
   },
   "keywords": [],

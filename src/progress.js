@@ -9,4 +9,3 @@ export default class Progress {
     this.options = Object.assign({}, defaultOption, options)
   }
 }
-
