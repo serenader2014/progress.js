@@ -15,7 +15,8 @@
     "bundle": "npm run bundle:lib && npm run bundle:demo",
     "watch:lib": "chokidar src/*.* -c \"npm run bundle:lib\"",
     "watch:demo": "chokidar demo/*.* lib/progress.bundle.js !demo/demo.bundle.js -c \"npm run bundle:demo\" -d 1000",
-    "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:lib\" \"npm run watch:demo\""
+    "watch:build": "chokidar lib/progress.bundle.js -c \"npm run uglify\"",
+    "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:lib\" \"npm run watch:demo\" \"npm run watch:build\""
   },
   "keywords": [],
   "author": "",
