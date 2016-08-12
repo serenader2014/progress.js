@@ -148,7 +148,7 @@ export default class Progress {
           this.element.parentNode.removeChild(this.element)
           this.trigger('end')
         }
-        opacity = opacity - 0.2
+        opacity -= 0.2
       }, 50)
     }, 400)
   }
@@ -168,15 +168,15 @@ export default class Progress {
 
     this.options.color = hex
     extend(this.element.querySelector('.progress-bar').style, {
-      background: hex, 
+      background: hex,
       boxShadow: `0 0 10px 0 rgba(${rgb}, 0.5)`
     })
     extend(this.element.querySelector('.progress-bar-inner').style, {
-      background: hex, 
+      background: hex,
       boxShadow: `0 0 10px rgba(${rgb},0.5)`
     })
     extend(this.element.querySelector('.progress-circle').style, {
-      borderBottomColor: hex, 
+      borderBottomColor: hex,
       borderLeftColor: hex
     })
     this.trigger('setColor')
