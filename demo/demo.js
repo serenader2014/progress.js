@@ -7,11 +7,6 @@ const progress = new Progress({
 
 })
 
-
-progress.on('init', () => {
-  console.log('init')
-})
-
 progress.on('start', () => {
   console.log('start')
 })

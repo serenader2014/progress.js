@@ -77,7 +77,6 @@ export default class Progress {
     this.element.className = 'progress-wrapper'
     this.setColor(this.options.color)
     this.options.element.appendChild(this.element)
-    this.trigger('init')
   }
 
   start() {
