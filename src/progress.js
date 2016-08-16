@@ -8,8 +8,7 @@ const body = document.querySelector('body')
 const defaultOption = {
   element: body,
   position: 'top',
-  color: 'rgb(2, 141, 192)',
-  autoIncrease: false
+  color: 'rgb(2, 141, 192)'
 }
 
 let instanceCount = 0
@@ -23,6 +22,7 @@ export default class Progress {
     this._intervalHandler = null
     this.status = 'waiting'
     this.callbacks = {}
+    this.init()
   }
 
   init() {
@@ -76,7 +76,6 @@ export default class Progress {
     this.element.innerHTML = tmpl
     this.element.className = 'progress-wrapper'
     this.setColor(this.options.color)
-    this.status = 'loading'
     this.options.element.appendChild(this.element)
     this.trigger('init')
   }
@@ -84,37 +83,25 @@ export default class Progress {
   start() {
     if (~['loading', 'prohibit'].indexOf(this.status)) return
 
-    this.init()
-    this.set(0)
+    this.status = 'loading'
+
+    this._intervalHandler = setInterval(() => {
+      this.percent = this.percent + Math.floor(Math.random() * 5)
+      if (this.percent > 98) {
+        this.percent = 98
+        this.stop()
+      }
+      this.set(this.percent)
+    }, 400)
+
     this.trigger('start')
     if (this.options.autoIncrease) this.increase(true)
-  }
-
-  increase(auto) {
-    if (this.status !== 'loading' || this._autoIncrease) return
-
-    if (auto) {
-      this._autoIncrease = true
-      this._intervalHandler = setInterval(() => {
-        this.percent = this.percent + Math.floor(Math.random() * 5)
-        if (this.percent > 98) {
-          this.percent = 98
-          this.stop()
-        }
-        this.set(this.percent)
-      }, 400)
-    } else {
-      this.set(this.percent + Math.floor(Math.random() * 5))
-    }
-
-    this.trigger('increase')
   }
 
   stop() {
     if (this._intervalHandler) {
       clearInterval(this._intervalHandler)
       this._intervalHandler = null
-      this._autoIncrease = false
     }
     this.trigger('stop')
   }
@@ -148,7 +135,7 @@ export default class Progress {
           this.element.parentNode.removeChild(this.element)
           this.trigger('end')
         }
-        opacity -= 0.2
+        opacity -= 0.1
       }, 50)
     }, 400)
   }

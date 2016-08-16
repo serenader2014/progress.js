@@ -1,6 +1,8 @@
 import Progress from '../src/progress.js'
 import './style.css'
 
+const stop = document.querySelector('button')
+
 const progress = new Progress({
 
 })
@@ -19,5 +21,8 @@ progress.on('progress', () => {
 })
 
 progress.start()
-progress.increase(true)
 console.log(progress)
+
+stop.addEventListener('click', () => {
+  progress.end()
+})
