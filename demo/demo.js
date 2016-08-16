@@ -7,12 +7,17 @@ const progress = new Progress({
 
 })
 
+function randomNumber(length) {
+  return Math.floor(Math.random() * length)
+}
+
 progress.on('start', () => {
   console.log('start')
 })
 
-progress.on('progress', () => {
-  console.log('progress')
+progress.on('progress', (p) => {
+  console.log('progress', p)
+  progress.setColor(`rgb(${randomNumber(255)},${randomNumber(255)},${randomNumber(255)})`)
 })
 
 progress.start()

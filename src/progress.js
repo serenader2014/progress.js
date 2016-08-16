@@ -85,12 +85,12 @@ export default class Progress {
     this.status = 'loading'
 
     this._intervalHandler = setInterval(() => {
-      this.percent = this.percent + Math.floor(Math.random() * 5)
-      if (this.percent > 98) {
-        this.percent = 98
-        this.stop()
+      if (this.percent < 98) {
+        this.percent = this.percent + Math.floor(Math.random() * 5)
+        this.percent = this.percent > 98 ? 98 : this.percent
+        this.set(this.percent)
       }
-      this.set(this.percent)
+      this.trigger('progress', this.percent)
     }, 400)
 
     this.trigger('start')
@@ -106,13 +106,18 @@ export default class Progress {
   }
 
   set(percent) {
-    if (this.status !== 'loading') return
+    if (this.status !== 'loading'
+      || typeof percent !== 'number'
+      || percent < 0
+      || percent > 100) {
+      return
+    }
 
     this.percent = percent
     extend(this.element.querySelector('.progress-bar').style, {
       width: `${this.percent}%`
     })
-    this.trigger('progress')
+    this.trigger('set', percent)
   }
 
   end() {
@@ -165,7 +170,7 @@ export default class Progress {
       borderBottomColor: hex,
       borderLeftColor: hex
     })
-    this.trigger('setColor')
+    this.trigger('setColor', hex)
   }
 
   on(name, fn, context) {
@@ -182,10 +187,9 @@ export default class Progress {
     }
   }
 
-  trigger(name) {
+  trigger(name, ...args) {
     if (!this.callbacks[name] || !this.callbacks[name].length) return
 
-    this.callbacks[name].forEach(cb => cb.fn.call(cb.context))
+    this.callbacks[name].forEach(cb => cb.fn.apply(cb.context, args))
   }
-
 }
