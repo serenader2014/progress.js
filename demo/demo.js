@@ -17,7 +17,7 @@ progress.on('start', () => {
 
 progress.on('progress', (p) => {
   console.log('progress', p)
-  progress.setColor(`rgb(${randomNumber(255)},${randomNumber(255)},${randomNumber(255)})`)
+  // progress.setColor(`rgb(${randomNumber(255)},${randomNumber(255)},${randomNumber(255)})`)
 })
 
 progress.start()

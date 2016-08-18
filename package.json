@@ -4,19 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle:lib": "browserify src/progress.js -o lib/progress.bundle.js -t [ babelify --presets es2015 ] -t browserify-css",
-    "bundle:demo": "browserify demo/demo.js -o demo/demo.bundle.js -t [ babelify --presets es2015 ] -t browserify-css",
-    "build": "npm run cleanMinifiedFile && npm run bundle:lib && npm run uglify && npm run cleanBundleFile",
-    "uglify": "uglifyjs lib/progress.bundle.js -o lib/progress.min.js",
-    "cleanMinifiedFile": "rm lib/progress.min.js",
-    "cleanBundleFile": "rm lib/progress.bundle.js",
+    "bundle": "browserify demo/demo.js -o demo/demo.bundle.js -t [ babelify --presets es2015 ] -t browserify-css -d",
     "test": "eslint src",
-    "serve": "browser-sync start -s demo -f demo -f !demo/demo.js --serveStatic lib --reload-debounce 1000",
-    "bundle": "npm run bundle:lib && npm run bundle:demo",
-    "watch:lib": "chokidar src/*.* -c \"npm run bundle:lib\"",
-    "watch:demo": "chokidar demo/*.* lib/progress.bundle.js !demo/demo.bundle.js -c \"npm run bundle:demo\" -d 1000",
-    "watch:build": "chokidar lib/progress.bundle.js -c \"npm run uglify\"",
-    "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:lib\" \"npm run watch:demo\" \"npm run watch:build\""
+    "serve": "browser-sync start -s demo -f demo -f !demo/demo.js --reload-debounce 1000",
+    "watch:demo": "chokidar demo/*.* src/*.* !demo/demo.bundle.js -c \"npm run bundle\" -d 1000",
+    "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:demo\""
   },
   "keywords": [],
   "author": "",

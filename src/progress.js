@@ -11,6 +11,10 @@ const defaultOption = {
   color: 'rgb(2, 141, 192)'
 }
 
+const linear = time => {
+  return time * 2
+}
+
 let instanceCount = 0
 
 export default class Progress {
@@ -79,18 +83,31 @@ export default class Progress {
     this.options.element.appendChild(this.element)
   }
 
-  start() {
+  start(algorithm) {
     if (~['loading', 'prohibit'].indexOf(this.status)) return
 
     this.status = 'loading'
 
+    let timingFn = null
+
+    switch (algorithm) {
+      case 'linear':
+        timingFn = linear
+        break
+      default:
+        timingFn = linear
+    }
+
+    let time = 1
+
     this._intervalHandler = setInterval(() => {
       if (this.percent < 98) {
-        this.percent = this.percent + Math.floor(Math.random() * 5)
+        this.percent = timingFn(time)
         this.percent = this.percent > 98 ? 98 : this.percent
         this.set(this.percent)
       }
       this.trigger('progress', this.percent)
+      time = time + 1
     }, 400)
 
     this.trigger('start')
