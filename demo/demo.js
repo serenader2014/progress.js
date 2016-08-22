@@ -1,6 +1,3 @@
-import Progress from '../src/progress.js'
-import './style.css'
-
 const stop = document.querySelector('button')
 
 const progress = new Progress({

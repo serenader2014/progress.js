@@ -11,9 +11,7 @@ const defaultOption = {
   color: 'rgb(2, 141, 192)'
 }
 
-const linear = time => {
-  return time * 2
-}
+const linear = time => time * 2
 
 let instanceCount = 0
 
@@ -107,7 +105,7 @@ export default class Progress {
         this.set(this.percent)
       }
       this.trigger('progress', this.percent)
-      time = time + 1
+      time += 1
     }, 400)
 
     this.trigger('start')

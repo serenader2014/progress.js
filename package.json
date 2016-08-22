@@ -1,14 +1,16 @@
 {
   "name": "progress.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle": "browserify demo/demo.js -o demo/demo.bundle.js -t [ babelify --presets es2015 ] -t browserify-css -d",
+    "bundle": "browserify src/loader.js -o lib/progress.bundle.js -t [ babelify --presets es2015 ] -s Progress  -t browserify-css -d",
+    "uglify": "uglifyjs lib/progress.bundle.js -o lib/progress.min.js",
     "test": "eslint src",
-    "serve": "browser-sync start -s demo -f demo -f !demo/demo.js --reload-debounce 1000",
+    "serve": "browser-sync start -s demo -f demo -f !demo/demo.js --serveStatic lib --reload-debounce 1000",
     "watch:demo": "chokidar demo/*.* src/*.* !demo/demo.bundle.js -c \"npm run bundle\" -d 1000",
-    "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:demo\""
+    "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:demo\"",
+    "release": "npm run uglify"
   },
   "keywords": [],
   "author": "",
