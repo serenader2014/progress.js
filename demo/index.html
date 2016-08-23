@@ -2,11 +2,112 @@
 <html>
 <head>
     <title>Progress.js demo</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="//fonts.googleapis.com/css?family=Mrs+Saint+Delafield|Merriweather:300italic,700,300,700italic|Open+Sans:400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css">
 </head>
 <body>
-    hello world
-    <button>stop</button>
+    <a href="https://github.com/serenader2014/progress.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+    <main>
+        <h1 class="title"><a href="https://github.com/serenader2014/progress.js">Progress.js</a></h1>
+        <p class="description">A simple but powerful progress indicator for web.</p>
+        <section class="demo demo-1">
+            <h2 class="demo-title"><a href="#simple-demo" name="simple-demo" id="simple-demo">Simple demo</a></h2>
+            <pre class="language-javascript"><code>var progress = new Progress()
+var start = $('.demo-1 .start')
+var stop = $('.demo-1 .stop')
+
+start.on('click', function () {
+  progress.start()
+})
+
+stop.on('click', function() {
+  progress.end()
+})</code></pre>
+            <div class="demo-element">
+                <button class="start">start</button>
+                <button class="stop">stop</button>
+            </div>
+        </section>
+        <section class="demo demo-2">
+            <h2 class="demo-title"><a href="#integrate-with-jquery-ajax" id="integrate-with-jquery-ajax" name="integrate-with-jquery-ajax">Integrate with jQuery.ajax</a></h2>
+            <pre class="language-javascript"><code>var progress = new Progress()
+var sendRequest = $('.demo-2 .send-ajax')
+var requestResult = $('.demo-2 .request-result')
+var $document = $(document)
+var requestList = []
+
+$document.ajaxSend(function (event, xhr, option) {
+  requestList.push(option.url)
+  if (progress.status !== 'loading') {
+    progress.start()
+  }
+})
+$document.ajaxComplete(function (event, xhr, option) {
+  requestList.splice(requestList.indexOf(option.url), 1)
+  if (!requestList.length) {
+    progress.end()
+  }
+})
+sendRequest.on('click', function () {
+  $.get('/').success(function () {
+    requestResult.html('request finished') 
+  })
+})</code></pre>
+            <div class="demo-element">
+                <button class="send-ajax">Make ajax request</button>
+                <p class="request-result"></p>
+            </div>
+        </section>
+        <section class="demo demo-3">
+            <h2 class="demo-title"><a href="#integrate-with-angular-http" id="integrate-with-angular-http" name="integrate-with-angular-http">Integrate with Angular.js $http service</a></h2>
+            <pre class="language-javascript"><code>var progress = new Progress()
+var angularDemo = angular.module('app', [])
+var requestList = []
+var requestResult = $('.demo-3 .request-result')
+
+angularDemo.factory('httpInterceptor', function () {
+  var responseInterceptor = {
+    request: function (config) {
+      requestList.push(config.url)
+      if (progress.status !== 'loading') {
+        progress.start()
+      }
+      return config
+    },
+    response: function (response) {
+      requestList.splice(requestList.indexOf(response.config.url), 1)
+      if (!requestList.length) {
+        progress.end()
+      }
+      return response
+    }
+  }
+  return responseInterceptor
+})
+
+angularDemo.config(['$httpProvider', function ($httpProvider) {
+  $httpProvider.interceptors.push('httpInterceptor')
+}])
+
+angularDemo.controller('ctrl', function ($http) {
+  this.makeRequest = function () {
+    $http.get('/').then(function (res) {
+      requestResult.html('request finished') 
+    })
+  }
+})</code></pre>
+            <div class="demo-element" ng-app="app" ng-controller="ctrl as ctrl">
+                <button class="send-http-request" ng-click="ctrl.makeRequest()">Make $http request</button>
+                <p class="request-result"></p>
+            </div>
+        </section>
+    </main>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/components/prism-javascript.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="../progress.bundle.js"></script>
     <script src="demo.js"></script>
 </body>

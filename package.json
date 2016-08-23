@@ -1,6 +1,6 @@
 {
   "name": "progress.js",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A simple but powerful progress indicator for web",
   "main": "lib/progress.min.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:demo\"",
     "release": "npm run uglify"
   },
-  "keywords": ["progress bar", "browser", "progress indicator"],
+  "keywords": ["progress bar", "progress indicator"],
   "author": {
     "name": "serenader2014",
     "email": "xyslive@gmail.com"

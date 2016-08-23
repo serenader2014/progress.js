@@ -24,7 +24,6 @@ export default class Progress {
     this._intervalHandler = null
     this.status = 'waiting'
     this.callbacks = {}
-    this.init()
   }
 
   init() {
@@ -83,6 +82,8 @@ export default class Progress {
 
   start(algorithm) {
     if (~['loading', 'prohibit'].indexOf(this.status)) return this
+
+    this.init()
 
     this.status = 'loading'
 
