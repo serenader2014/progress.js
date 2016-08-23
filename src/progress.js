@@ -82,7 +82,7 @@ export default class Progress {
   }
 
   start(algorithm) {
-    if (~['loading', 'prohibit'].indexOf(this.status)) return
+    if (~['loading', 'prohibit'].indexOf(this.status)) return this
 
     this.status = 'loading'
 
@@ -109,7 +109,8 @@ export default class Progress {
     }, 400)
 
     this.trigger('start')
-    if (this.options.autoIncrease) this.increase(true)
+
+    return this
   }
 
   stop() {
@@ -118,6 +119,8 @@ export default class Progress {
       this._intervalHandler = null
     }
     this.trigger('stop')
+
+    return this
   }
 
   set(percent) {
@@ -125,7 +128,7 @@ export default class Progress {
       || typeof percent !== 'number'
       || percent < 0
       || percent > 100) {
-      return
+      return this
     }
 
     this.percent = percent
@@ -133,10 +136,12 @@ export default class Progress {
       width: `${this.percent}%`
     })
     this.trigger('set', percent)
+
+    return this
   }
 
   end() {
-    if (this.status !== 'loading') return
+    if (this.status !== 'loading') return this
 
     this.stop()
     this.set(100)
@@ -157,10 +162,12 @@ export default class Progress {
         opacity -= 0.1
       }, 50)
     }, 400)
+
+    return this
   }
 
   setColor(c) {
-    if (!c) return
+    if (!c) return this
 
     let rgb
     let hex
@@ -186,6 +193,8 @@ export default class Progress {
       borderLeftColor: hex
     })
     this.trigger('setColor', hex)
+
+    return this
   }
 
   on(name, fn, context) {
@@ -200,11 +209,15 @@ export default class Progress {
         context: context || this
       })
     }
+
+    return this
   }
 
   trigger(name, ...args) {
-    if (!this.callbacks[name] || !this.callbacks[name].length) return
+    if (!this.callbacks[name] || !this.callbacks[name].length) return this
 
     this.callbacks[name].forEach(cb => cb.fn.apply(cb.context, args))
+
+    return this
   }
 }

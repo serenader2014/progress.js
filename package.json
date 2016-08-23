@@ -12,9 +12,17 @@
     "start": "npm run bundle && concurrently \"npm run serve\" \"npm run watch:demo\"",
     "release": "npm run uglify"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["progress bar", "browser", "progress indicator"],
+  "author": {
+    "name": "serenader2014",
+    "email": "xyslive@gmail.com"
+  },
+  "homepage": "https://github.com/serenader2014/progress.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/serenader2014/progress.js"
+  },
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.13.2",
     "babel-preset-es2015": "^6.13.2",
