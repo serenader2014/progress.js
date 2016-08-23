@@ -1,8 +1,8 @@
 {
   "name": "progress.js",
   "version": "1.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple but powerful progress indicator for web",
+  "main": "lib/progress.min.js",
   "scripts": {
     "bundle": "browserify src/loader.js -o lib/progress.bundle.js -t [ babelify --presets es2015 ] -s Progress  -t browserify-css -d",
     "uglify": "uglifyjs lib/progress.bundle.js -o lib/progress.min.js",
