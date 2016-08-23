@@ -33,7 +33,7 @@
     }
   })
   sendRequest.on('click', function () {
-    $.get('/').success(function () {
+    $.get(location.href).success(function () {
       requestResult.html('request finished') 
     })
   })
@@ -68,7 +68,7 @@
   }])
   angularDemo.controller('ctrl', function ($http) {
     this.makeRequest = function () {
-      $http.get('/').then(function (res) {
+      $http.get(location.href).then(function (res) {
         requestResult.html('request finished') 
       })
     }
