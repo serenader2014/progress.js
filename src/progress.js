@@ -16,7 +16,7 @@ const linear = time => time * 2
 let instanceCount = 0
 
 export default class Progress {
-  constructor(options) {
+  constructor(options = {}) {
     instanceCount++
     this.options = extend({}, defaultOption, options)
     this.percent = 0

@@ -1,9 +1,7 @@
 window.onload = function () {
     const stop = document.querySelector('button')
 
-    const progress = new Progress({
-
-    })
+    const progress = new Progress()
 
     function randomNumber(length) {
       return Math.floor(Math.random() * length)
